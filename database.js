@@ -1,11 +1,12 @@
+//Expess needed?
 var express = require('express');
-var encryption = require('./encrypt.js');
+var encryption = require('./encryption.js');
 
 // Mongoose import
 var mongoose = require('mongoose');
 
 // Mongoose connection to MongoDB (ted/ted is readonly)
-mongoose.connect('mongodb://localhost/test5', function (error) {
+mongoose.connect('mongodb://localhost/test6', function (error) {
     if (error) {
         console.log(error);
     }
@@ -14,14 +15,16 @@ mongoose.connect('mongodb://localhost/test5', function (error) {
 // Mongoose Schema definition
 var Schema = mongoose.Schema;
 var TempUserSchema = new Schema({
-  username: String,
+  accountHolderName: String,
+  email: String,
   password: String,
   token: String,
   createdAt: { type: Date, default: Date.now, expires: 3600}
 }, {collection: 'tempUserExperimentalExperiment'})
 
 var UserSchema = new Schema({
-  username: String,
+  accountHolderName: String,
+  email: String,
   password: String
 }, {collection: 'UserExperimental'})
 
@@ -31,33 +34,52 @@ var UserModel = mongoose.model('UserExperimental', UserSchema);
 
 
 var queries = {
-  insert: function(usernameParam, passwordParam, tokenParam){
-    var encryptedPassword = encryption(passwordParam);
-    TempUserModel.create({username: usernameParam, password: encryptedPassword, token: tokenParam}, function (err, small) {
+
+  insertTempUser: function(nameParam, emailParam, passwordParam, tokenParam){
+    var encryptedPassword = encryption.encryptPassword(passwordParam);
+    TempUserModel.create({accountHolderName: nameParam, email: emailParam, password: encryptedPassword, token: tokenParam}, function (err, small) {
       if (err) return handleError(err);
         console.log("Token Saved");// saved!
     });
   },
-  find: function(tokenParam, cb){
+  validateTempUser: function(tokenParam, cb){
     TempUserModel.findOne({ token: tokenParam}, cb).exec(
       function(err, doc) {
         if(doc){
-          UserModel.create({username: doc.username, password: doc.password}, function (err, small) {
+          UserModel.create({accountHolderName: doc.accountHolderName, email: doc.email, password: doc.password}, function (err, small) {
             if (err) return handleError(err);
               console.log("New user added to the system");
           });
-      }
-      else{
-        console.log('Not found here');
-      }
-  });
-},
-  remove: function(tokenParam){
+        }
+        else{
+          console.log('Not found here');
+        }
+    });
+  },
+  removeTempUser: function(tokenParam){
     TempUserModel.remove({token: tokenParam}, function (err) {
       if (err) return handleError(err);
         console.log('removed ' + tokenParam);
     })
-  }}
+  },
+
+  authenticateUser: function(emailParam, passwordParam, cb){
+    UserModel.findOne({ email: emailParam}, cb).exec(
+      function(err, doc) {
+        if(doc){
+          var passwordMatch = encryption.checkPassword(passwordParam, doc.password)
+          if(passwordMatch){
+            console.log('PasswordsMatch')
+          }
+          else{
+            console.log('Passwords do not match')
+          }}
+        else{
+          console.log('Email not found')
+        }
+        })
+  }
+}
 
 module.exports = queries;
 

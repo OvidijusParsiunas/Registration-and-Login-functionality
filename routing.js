@@ -17,7 +17,7 @@ module.exports = function(app) {
     app.get('/verify', function (req, res) {
       if(req.query.token)
       {
-        var results = another.find(req.query.token, function(err, data){
+        var results = another.validateTempUser(req.query.token, function(err, data){
           if(data == null)
           {
             console.log('Not found');
@@ -36,7 +36,7 @@ module.exports = function(app) {
     app.post('/submit', function (req, res) {
         processAllFieldsOfTheForm(req, res);
     })
-    
+
     function displayForm(res) {
         fs.readFile('form.html', function (err, data) {
             res.writeHead(200, {
@@ -67,7 +67,7 @@ module.exports = function(app) {
       });
       res.write('Sent successfully:\n\n');
       console.log(fields.email);
-      sendMail.sendEmail(fields.username, fields.password, fields.email);
+      sendMail.sendEmail(fields.accountHolderName, fields.email, fields.password, fields.email);
       res.end(util.inspect({
           fields: fields
       }));

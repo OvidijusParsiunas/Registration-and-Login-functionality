@@ -57,14 +57,14 @@ var generateToken = function() {
 }
 
 
-exports.sendEmail = function(username, password, emailOrigin) {
-  console.log('passed in address: ' + emailOrigin);
-  mailOptions['to'] = emailOrigin;
+exports.sendEmail = function(accountHolderName, email, password, email) {
+  console.log('passed in address: ' + email);
+  mailOptions['to'] = email;
   console.log('The new object is: ' + emailAddress);
   generateToken();
   console.log('The new token is: ' + currentToken);
   console.log(mailOptions.html);
-  another.insert(username, password, currentToken);
+  another.insertTempUser(accountHolderName, email, password, currentToken);
   // transporter.sendMail(mailOptions, function(error, info){
   //   if(error){
   //     return console.log(error);
