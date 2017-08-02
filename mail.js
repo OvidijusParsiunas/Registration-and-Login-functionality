@@ -65,10 +65,10 @@ exports.sendEmail = function(accountHolderName, email, password, email) {
   console.log('The new token is: ' + currentToken);
   console.log(mailOptions.html);
   another.insertTempUser(accountHolderName, email, password, currentToken);
-  // transporter.sendMail(mailOptions, function(error, info){
-  //   if(error){
-  //     return console.log(error);
-  //   }
-  //   console.log('Message sent: ' + info.response);
-  // });
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      return console.log(error);
+    }
+    console.log('Message sent: ' + info.response);
+  });
 };

@@ -77,17 +77,20 @@ module.exports = function(app) {
     function processAllFieldsOfTheForm(req, res) {
         var fields = new Object();
         var form = new formidable.IncomingForm();
-        form.parse(req, function (err, otherMaterials) {
+        form.parse(req, function (err, fields) {
             //Store the data from the fields in your data store.
             //The data store could be a file or database or any other store based
             //on your application.
             res.writeHead(200, {
                 'content-type': 'text/plain'
             });
+            var otherMaterials = {name: 'hello'}
             res.write('received the data:\n\n');
+            another.authenticateUser(fields.email, fields.password)
+            console.log('The email is ' + fields.email + ' the password is ' + fields.password)
             res.end(util.inspect({
-                otherMaterials: otherMaterials,
-                fields: fields
+                fields: fields,
+                otherMaterials: otherMaterials
             }));
         });
     }

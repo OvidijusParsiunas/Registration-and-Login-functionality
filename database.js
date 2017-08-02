@@ -47,8 +47,12 @@ var queries = {
       function(err, doc) {
         if(doc){
           UserModel.create({accountHolderName: doc.accountHolderName, email: doc.email, password: doc.password}, function (err, small) {
+          if (err) return handleError(err);
+            console.log("New user added to the system with the name of " + doc.accountHolderName);
+            TempUserModel.remove({token: tokenParam}, function (err) {
             if (err) return handleError(err);
-              console.log("New user added to the system");
+              console.log('removed ' + tokenParam);
+            })
           });
         }
         else{
@@ -75,7 +79,7 @@ var queries = {
             console.log('Passwords do not match')
           }}
         else{
-          console.log('Email not found')
+          console.log('Email not found for ' + emailParam)
         }
         })
   }
