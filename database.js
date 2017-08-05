@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost/test6', function (error) {
 var Schema = mongoose.Schema;
 var TempUserSchema = new Schema({
   accountHolderName: String,
-  email: String,
+  email: {type: String, unique : true, dropDups: true},
   password: String,
   token: String,
   createdAt: { type: Date, default: Date.now, expires: 3600}
@@ -34,11 +34,16 @@ var UserModel = mongoose.model('UserExperimental', UserSchema);
 
 
 var queries = {
-
   insertTempUser: function(nameParam, emailParam, passwordParam, tokenParam){
     var encryptedPassword = encryption.encryptPassword(passwordParam);
     TempUserModel.create({accountHolderName: nameParam, email: emailParam, password: encryptedPassword, token: tokenParam}, function (err, small) {
-      if (err) return handleError(err);
+      if (err) {
+            var error = 'Something bad happened, try again!';
+            console.log('Something bad happened, try again!');
+            if(err.code === 11000) {
+              error = 'That email is already taken, try another.';
+            }
+          }
         console.log("Token Saved");// saved!
     });
   },
@@ -68,18 +73,17 @@ var queries = {
   },
 
   authenticateUser: function(emailParam, passwordParam, cb){
-    UserModel.findOne({ email: emailParam}, cb).exec(
+    UserModel.findOne({ email: emailParam}).exec(
       function(err, doc) {
         if(doc){
-          var passwordMatch = encryption.checkPassword(passwordParam, doc.password)
-          if(passwordMatch){
-            console.log('PasswordsMatch')
+          if(encryption.checkPassword(passwordParam, doc.password)){
+            return cb('Successfull')
           }
-          else{
-            console.log('Passwords do not match')
+          else {
+            return cb('Password is incorrect')
           }}
         else{
-          console.log('Email not found for ' + emailParam)
+              return cb('Your email is incorrect')
         }
         })
   }

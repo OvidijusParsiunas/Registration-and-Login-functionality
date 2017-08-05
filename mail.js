@@ -5,24 +5,6 @@ var emailAddress;
 var currentToken;
 // create reusable transporter object using the default SMTP transport
 
-var transporter2 = nodemailer.createTransport({
-
-   aliases: [
-           "Google Mail"
-       ],
-   domains: [
-           "gmail.com",
-           "googlemail.com"
-       ],
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: 'oparsiunas@gmail.com',
-    pass: 'Rikis33893'
-  }
-});
-
 var transporter = nodemailer.createTransport({
   aliases: [
       "Outlook",
@@ -65,10 +47,10 @@ exports.sendEmail = function(accountHolderName, email, password, email) {
   console.log('The new token is: ' + currentToken);
   console.log(mailOptions.html);
   another.insertTempUser(accountHolderName, email, password, currentToken);
-  transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-      return console.log(error);
-    }
-    console.log('Message sent: ' + info.response);
-  });
+  // transporter.sendMail(mailOptions, function(error, info){
+  //   if(error){
+  //     return console.log(error);
+  //   }
+  //   console.log('Message sent: ' + info.response);
+  // });
 };

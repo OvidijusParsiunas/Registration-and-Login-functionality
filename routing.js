@@ -86,7 +86,10 @@ module.exports = function(app) {
             });
             var otherMaterials = {name: 'hello'}
             res.write('received the data:\n\n');
-            another.authenticateUser(fields.email, fields.password)
+            if(another.authenticateUser(fields.email, fields.password, function(response) {
+              console.log('The response is: ' + response)
+            }))
+            console.log(returnedVariable)
             console.log('The email is ' + fields.email + ' the password is ' + fields.password)
             res.end(util.inspect({
                 fields: fields,

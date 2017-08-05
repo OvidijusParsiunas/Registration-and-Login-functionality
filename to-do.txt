@@ -1,5 +1,5 @@
 1. Being able to log in
-  1.1 3 Failed attempts and an email will be send out
+  1.1 3 Failed attem#pts and an email will be send out
   1.2 Login via gmail/facebook
   1.3 Mobile phone verification
   1.4 Forgot password
@@ -7,6 +7,7 @@
   1.6 refactor database to store passwords in a seperate collection
   1.7 password validation
   1.8 unique username!!!!
+  1.9 error callbacks
 2. Check profile settings
 3. Establish roles
 4. Upload an image
