@@ -1,6 +1,6 @@
 var http = require('http');
 var routes = require('./routing.js');
-
+const db = require('./database/database.js')
 const express = require('express')
 const app = express()
 
@@ -9,14 +9,6 @@ app.listen(1185, function () {
 })
 
 routes(app);
-
-
-
-
-
-
-
-
 
 
 var address = {
