@@ -6,12 +6,14 @@
   1.5 Check if two passwords match when registering
   1.6 refactor database to store passwords in a separate collection
   1.7 password validation (number of letters, numbers)
-  1.8 unique username!!!!
   1.9 error callbacks
 2. Check profile settings
 3. Establish roles
 4. Upload an image
 5. Use a to-do list
-6. Store session data in a Redis server and a Passport package: https://blog.risingstack.com/node-hero-node-js-authentication-passport-js/
+6. Store session data in a Redis server and a Passport package:
+    https://blog.risingstack.com/node-hero-node-js-authentication-passport-js/ or
+    utilise this for further information on Redis: https://codeforgeek.com/2015/07/using-redis-to-handle-session-in-node-js/
+    authenticated express routes example: https://stackoverflow.com/questions/25602948/what-is-a-better-way-to-authenticate-some-of-the-routes-on-express-4-router
 
 ~~Make the use of email verification optional

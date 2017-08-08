@@ -38,7 +38,7 @@ exports.sendEmail = function(email, accountVerificationToken) {
   //console.log('passed in address: ' + email);
   mailOptions['to'] = email;
   //console.log('The new object is: ' + emailAddress);
-  mailOptions['html'] = '<b>Hello world <a href="http://localhost:1185/verifyNewAccount?token=' + accountVerificationToken + '">Visit W3Schools</a>  </b>';
+  mailOptions['html'] = '<b>Hello world <a href="http://localhost:1185/register/verifyNewAccount?token=' + accountVerificationToken + '">Visit W3Schools</a>  </b>';
   //console.log('The new token is: ' + accountVerificationToken);
   //console.log(mailOptions.html);
   transporter.sendMail(mailOptions, function(error, info){

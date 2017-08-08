@@ -1,9 +1,12 @@
 <html>
    <body>
-      <form action="authenticateUser" method="post" enctype="multipart/form-data">
+      <form action="/register" method="post" enctype="multipart/form-data">
          <fieldset>
+           <label for="accountHolderName">Your name:</label>
+           <input type="text" id="accountHolderName" name="accountHolderName" placeholder="Enter your account's username" />
+           <br />
            <label for="email">Email:</label>
-           <input type="text" id="email" name="email" placeholder="Enter your email address" />
+           <input type="email" id="email" name="email" placeholder="Enter your email address" />
            <br />
            <label for="password">Password:</label>
            <input type="text" id="password" name="password" placeholder="Enter your password" />

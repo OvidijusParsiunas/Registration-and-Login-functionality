@@ -1,5 +1,7 @@
 var http = require('http');
-var routes = require('./routing.js');
+var login = require('./routes/loginRoutes.js');
+var registration = require('./routes/registrationRoutes.js');
+
 const db = require('./database/database.js')
 const express = require('express')
 const app = express()
@@ -8,8 +10,8 @@ app.listen(1185, function () {
   console.log('App listening on port 1185!')
 })
 
-routes(app);
-
+app.use('/login', login)
+app.use('/register', registration)
 
 var address = {
   streetName : 'Gaisrininku',
